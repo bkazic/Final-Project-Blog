@@ -1776,7 +1776,7 @@ type of transportation.</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>For this research we used the traffic loop sensor measurement data for Slovenia. There are 447 loop sensros installed inside the Slovenian roads (see figure). Every sensor data contains meta data information (such as location of the sensor, direction, region), as well as some regular traffic status measurements (such as flow, gap, occupancy, speed, traffic status). Real-time data stream is refresed every 5 minutes and is accesible via web API in JSON format at <a href="http://opendata.si/promet/counters/">http://opendata.si/promet/counters/</a>.</p>
 <p>This service has been continouslly crawled for the last 6 months by which we have created a historical dump of traffic related data, with 5 minutes resampling interval, for all 447 sensors. The availability of large amount of data makes this problem highly suitable for several machine learning methods.</p>
-<p><img src="figures/counters.png"></p>
+<p><img src="Figures/counters.png" /></p>
 </div>
 </div>
 </div>
@@ -1802,11 +1802,12 @@ type of transportation.</p>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[123]:
+In&nbsp;[69]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
 <div class="highlight"><pre><span class="o">%</span><span class="k">matplotlib</span> <span class="n">inline</span>
+<span class="c">#from IPython.display import FileLink, FileLinks</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
@@ -1820,14 +1821,14 @@ In&nbsp;[123]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[124]:
+In&nbsp;[70]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
 <div class="highlight"><pre><span class="c"># Import data from csv</span>
 <span class="n">traffic_file_path</span> <span class="o">=</span> <span class="s">&quot;Data/0178_11.csv&quot;</span>
-<span class="n">traffic_data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">traffic_file_path</span><span class="p">)</span>
-<span class="n">traffic_data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">traffic_file_path</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
+<span class="n">traffic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">traffic_file_path</span><span class="p">)</span>
+<span class="n">traffic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">traffic_file_path</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
                                <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;SensorID&quot;</span><span class="p">,</span><span class="s">&quot;DateTime&quot;</span><span class="p">,</span><span class="s">&quot;Flow&quot;</span><span class="p">,</span><span class="s">&quot;Gap&quot;</span><span class="p">,</span><span class="s">&quot;Occupancy&quot;</span><span class="p">,</span><span class="s">&quot;Speed&quot;</span><span class="p">,</span><span class="s">&quot;TrafficStatus&quot;</span><span class="p">],</span> 
                                <span class="n">index_col</span><span class="o">=</span><span class="s">&#39;DateTime&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">dayfirst</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
@@ -1844,7 +1845,7 @@ In&nbsp;[124]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[124]:</div>
+    Out[70]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -1931,6 +1932,16 @@ In&nbsp;[124]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>This graph contains data visualisation from all data fields.</p>
+<p><img src="Figures/traffic_params.png" width="80%" height="80%"/></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Data-Munging">Data Munging<a class="anchor-link" href="#Data-Munging">&#182;</a></h3>
 </div>
 </div>
@@ -1948,7 +1959,7 @@ In&nbsp;[124]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[125]:
+In&nbsp;[71]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -1964,7 +1975,7 @@ In&nbsp;[125]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[125]:</div>
+    Out[71]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -2077,7 +2088,7 @@ In&nbsp;[125]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[126]:
+In&nbsp;[72]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2095,7 +2106,7 @@ In&nbsp;[126]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[126]:</div>
+    Out[72]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -2180,7 +2191,7 @@ In&nbsp;[126]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[127]:
+In&nbsp;[73]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2214,7 +2225,7 @@ In&nbsp;[127]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[128]:
+In&nbsp;[74]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2231,7 +2242,7 @@ In&nbsp;[128]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[128]:</div>
+    Out[74]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -2334,7 +2345,7 @@ In&nbsp;[128]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[129]:
+In&nbsp;[75]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2351,7 +2362,7 @@ In&nbsp;[129]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[129]:</div>
+    Out[75]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -2445,7 +2456,7 @@ In&nbsp;[129]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[138]:
+In&nbsp;[76]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2464,7 +2475,7 @@ In&nbsp;[138]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[138]:</div>
+    Out[76]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -2558,7 +2569,7 @@ In&nbsp;[138]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[140]:
+In&nbsp;[77]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2575,7 +2586,7 @@ In&nbsp;[140]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[140]:</div>
+    Out[77]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -2662,18 +2673,57 @@ In&nbsp;[140]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>If we perform the sanity check again, we can see that the data looks better now. Mininmum row does not contain zeros any more. We can also notice that the Speed mean slightly increased (from 96.8 <em>km/h</em> to 97.3 <em>km/h</em>), due to deleted corrupted zero values.</p>
+<h4 id="Problem-with-predicting-speed-parameter">Problem with predicting speed parameter<a class="anchor-link" href="#Problem-with-predicting-speed-parameter">&#182;</a></h4>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see another important finidng, if we compare standard deviation values between traffic parameters, see that speed variable has a very low standard deviation value (8.9 <em>km/h</em>) in comparison with mean value (96.8 <em>km/h</em>). This means that the value does not vary a lot around the mean value, meaning that speed parameter is more or less all the time near speed limit, no matter the state of traffic. In contrast, flow parameter for example varies a lot during the day. We can clearlly see increased traffic flow in the mornings and afternoons (rushours) and decreased traffic by night. This is one of the main reasons why most of the researchers do not use speed parameter as target parameter for prediction. For the same reason, in this reaserch flow parameter was choosen as target parameter.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><font color='red'>TODO: </font> add one week speed and flow graph. I will do this after I finish lesson 4.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Adding-a-&quot;Target&quot;">Adding a "Target"<a class="anchor-link" href="#Adding-a-&quot;Target&quot;">&#182;</a></h4>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For the reasons that was discussed in previus chapter &quot;Flow&quot; parameter was selected as the target parameter. &quot;Target&quot; column is added to the dataframe, by duplicating the &quot;Flow&quot; and shifting it for one hour back. This column will be used to learn the model how to predict traffic flow for one hour into the future. </p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[141]:
+In&nbsp;[78]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">traffic_data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<div class="highlight"><pre><span class="n">traffic_data</span><span class="p">[</span><span class="s">&quot;Target&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">traffic_data</span><span class="p">[</span><span class="s">&quot;Flow&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;H&#39;</span><span class="p">)</span>
+<span class="n">traffic_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -2685,7 +2735,7 @@ In&nbsp;[141]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[141]:</div>
+    Out[78]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -2693,77 +2743,115 @@ In&nbsp;[141]:
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>SensorID</th>
       <th>Flow</th>
       <th>Gap</th>
       <th>Occupancy</th>
       <th>Speed</th>
       <th>TrafficStatus</th>
+      <th>Target</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>count</th>
-      <td> 37155.000000</td>
-      <td> 37155.000000</td>
-      <td> 37155.000000</td>
-      <td> 37155.000000</td>
-      <td> 37155.000000</td>
+      <th>2014-01-01 01:00:00</th>
+      <td> 0178-11</td>
+      <td> 192</td>
+      <td> 18.5</td>
+      <td> 14</td>
+      <td> 105</td>
+      <td> 1</td>
+      <td> 228</td>
     </tr>
     <tr>
-      <th>mean</th>
-      <td>   669.763423</td>
-      <td>     9.023706</td>
-      <td>    68.865563</td>
-      <td>    97.374727</td>
-      <td>     2.124182</td>
+      <th>2014-01-01 01:05:00</th>
+      <td> 0178-11</td>
+      <td> 156</td>
+      <td> 21.6</td>
+      <td> 11</td>
+      <td> 100</td>
+      <td> 1</td>
+      <td> 276</td>
     </tr>
     <tr>
-      <th>std</th>
-      <td>   372.701561</td>
-      <td>     9.373869</td>
-      <td>    41.897640</td>
-      <td>     6.824312</td>
-      <td>     0.971536</td>
+      <th>2014-01-01 01:10:00</th>
+      <td> 0178-11</td>
+      <td> 228</td>
+      <td> 16.3</td>
+      <td> 16</td>
+      <td> 112</td>
+      <td> 1</td>
+      <td> 288</td>
     </tr>
     <tr>
-      <th>min</th>
-      <td>    24.000000</td>
-      <td>     0.800000</td>
-      <td>     2.000000</td>
-      <td>     7.000000</td>
-      <td>     1.000000</td>
+      <th>2014-01-01 01:15:00</th>
+      <td> 0178-11</td>
+      <td> 300</td>
+      <td> 11.7</td>
+      <td> 23</td>
+      <td>  99</td>
+      <td> 1</td>
+      <td> 168</td>
     </tr>
     <tr>
-      <th>25%</th>
-      <td>   288.000000</td>
-      <td>     3.200000</td>
-      <td>    31.000000</td>
-      <td>    93.000000</td>
-      <td>     1.000000</td>
+      <th>2014-01-01 01:20:00</th>
+      <td> 0178-11</td>
+      <td> 144</td>
+      <td> 22.2</td>
+      <td> 10</td>
+      <td> 108</td>
+      <td> 1</td>
+      <td> 168</td>
     </tr>
     <tr>
-      <th>50%</th>
-      <td>   732.000000</td>
-      <td>     4.500000</td>
-      <td>    67.000000</td>
-      <td>    97.000000</td>
-      <td>     2.000000</td>
+      <th>2014-01-01 01:25:00</th>
+      <td> 0178-11</td>
+      <td> 252</td>
+      <td> 13.3</td>
+      <td> 18</td>
+      <td> 105</td>
+      <td> 1</td>
+      <td> 156</td>
     </tr>
     <tr>
-      <th>75%</th>
-      <td>   972.000000</td>
-      <td>    11.900000</td>
-      <td>   101.000000</td>
-      <td>   101.000000</td>
-      <td>     3.000000</td>
+      <th>2014-01-01 01:30:00</th>
+      <td> 0178-11</td>
+      <td> 228</td>
+      <td> 16.6</td>
+      <td> 19</td>
+      <td>  93</td>
+      <td> 1</td>
+      <td> 192</td>
     </tr>
     <tr>
-      <th>max</th>
-      <td>  1560.000000</td>
-      <td>   146.200000</td>
-      <td>   788.000000</td>
-      <td>   132.000000</td>
-      <td>     5.000000</td>
+      <th>2014-01-01 01:35:00</th>
+      <td> 0178-11</td>
+      <td> 204</td>
+      <td> 16.2</td>
+      <td> 16</td>
+      <td>  98</td>
+      <td> 1</td>
+      <td> NaN</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 01:40:00</th>
+      <td> 0178-11</td>
+      <td> 264</td>
+      <td> 14.5</td>
+      <td> 21</td>
+      <td>  97</td>
+      <td> 1</td>
+      <td> NaN</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 01:45:00</th>
+      <td> 0178-11</td>
+      <td> 252</td>
+      <td> 14.3</td>
+      <td> 19</td>
+      <td> 101</td>
+      <td> 1</td>
+      <td> NaN</td>
     </tr>
   </tbody>
 </table>
@@ -2781,7 +2869,302 @@ In&nbsp;[141]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Problem-with-predicting-speed-parameter">Problem with predicting speed parameter<a class="anchor-link" href="#Problem-with-predicting-speed-parameter">&#182;</a></h4>
+<p>Since we have choosen to delete missing data in &quot;Flow&quot; column in previous chapter (and not to replace them with some estimated values), we therfore get also some NaN values in &quot;Target&quot; variables. For samples with NaN values we will perform listwise deletion. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[79]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight"><pre><span class="n">traffic_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">traffic_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[79]:</div>
+
+<div class="output_html rendered_html output_subarea output_pyout">
+<div style="max-height:1000px;max-width:1500px;overflow:auto;">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SensorID</th>
+      <th>Flow</th>
+      <th>Gap</th>
+      <th>Occupancy</th>
+      <th>Speed</th>
+      <th>TrafficStatus</th>
+      <th>Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2014-01-01 01:00:00</th>
+      <td> 0178-11</td>
+      <td> 192</td>
+      <td> 18.5</td>
+      <td> 14</td>
+      <td> 105</td>
+      <td> 1</td>
+      <td> 228</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 01:05:00</th>
+      <td> 0178-11</td>
+      <td> 156</td>
+      <td> 21.6</td>
+      <td> 11</td>
+      <td> 100</td>
+      <td> 1</td>
+      <td> 276</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 01:10:00</th>
+      <td> 0178-11</td>
+      <td> 228</td>
+      <td> 16.3</td>
+      <td> 16</td>
+      <td> 112</td>
+      <td> 1</td>
+      <td> 288</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 01:15:00</th>
+      <td> 0178-11</td>
+      <td> 300</td>
+      <td> 11.7</td>
+      <td> 23</td>
+      <td>  99</td>
+      <td> 1</td>
+      <td> 168</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 01:20:00</th>
+      <td> 0178-11</td>
+      <td> 144</td>
+      <td> 22.2</td>
+      <td> 10</td>
+      <td> 108</td>
+      <td> 1</td>
+      <td> 168</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 01:25:00</th>
+      <td> 0178-11</td>
+      <td> 252</td>
+      <td> 13.3</td>
+      <td> 18</td>
+      <td> 105</td>
+      <td> 1</td>
+      <td> 156</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 01:30:00</th>
+      <td> 0178-11</td>
+      <td> 228</td>
+      <td> 16.6</td>
+      <td> 19</td>
+      <td>  93</td>
+      <td> 1</td>
+      <td> 192</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 01:50:00</th>
+      <td> 0178-11</td>
+      <td> 204</td>
+      <td> 16.7</td>
+      <td> 15</td>
+      <td> 103</td>
+      <td> 1</td>
+      <td> 216</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 01:55:00</th>
+      <td> 0178-11</td>
+      <td> 156</td>
+      <td> 21.0</td>
+      <td> 12</td>
+      <td> 102</td>
+      <td> 1</td>
+      <td> 252</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 02:00:00</th>
+      <td> 0178-11</td>
+      <td> 228</td>
+      <td> 17.0</td>
+      <td> 16</td>
+      <td> 107</td>
+      <td> 1</td>
+      <td> 204</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we perform the sanity check again, we can see that we have reduced our dataset by 37% (from 46447 to 29215). But overall, the data looks better now, for example mininmum row does not contain zeros any more. We can also notice that the Speed mean slightly increased (from 96.8 <em>km/h</em> to 97.3 <em>km/h</em>), due to deleted corrupted zero values. We now have a clean dataset on which we can perform some statistic tests and train our prediction model.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><font color='red'>QUESTION: </font> Since we have reduced our dataset for 37%, should I use some other method than deletion? The problem is that sometimes, there is missing data for the whole week. We cannot use something like linear interpolation here. Even linear regression I am not sure it would be good?</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[80]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight"><pre><span class="n">traffic_data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[80]:</div>
+
+<div class="output_html rendered_html output_subarea output_pyout">
+<div style="max-height:1000px;max-width:1500px;overflow:auto;">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Flow</th>
+      <th>Gap</th>
+      <th>Occupancy</th>
+      <th>Speed</th>
+      <th>TrafficStatus</th>
+      <th>Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td> 29215.000000</td>
+      <td> 29215.000000</td>
+      <td> 29215.000000</td>
+      <td> 29215.000000</td>
+      <td> 29215.000000</td>
+      <td> 29215.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>   649.189937</td>
+      <td>     9.233243</td>
+      <td>    66.442820</td>
+      <td>    97.569536</td>
+      <td>     2.065685</td>
+      <td>   640.017525</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>   368.526558</td>
+      <td>     9.366433</td>
+      <td>    41.119034</td>
+      <td>     6.962099</td>
+      <td>     0.964364</td>
+      <td>   376.474042</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>    24.000000</td>
+      <td>     1.200000</td>
+      <td>     2.000000</td>
+      <td>     7.000000</td>
+      <td>     1.000000</td>
+      <td>    24.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>   288.000000</td>
+      <td>     3.300000</td>
+      <td>    30.000000</td>
+      <td>    93.000000</td>
+      <td>     1.000000</td>
+      <td>   252.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>   684.000000</td>
+      <td>     4.800000</td>
+      <td>    63.000000</td>
+      <td>    97.000000</td>
+      <td>     2.000000</td>
+      <td>   672.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>   960.000000</td>
+      <td>    12.300000</td>
+      <td>    98.000000</td>
+      <td>   102.000000</td>
+      <td>     3.000000</td>
+      <td>   960.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>  1548.000000</td>
+      <td>   146.200000</td>
+      <td>   788.000000</td>
+      <td>   132.000000</td>
+      <td>     5.000000</td>
+      <td>  1548.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Data-Statistics">Data Statistics<a class="anchor-link" href="#Data-Statistics">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -2791,8 +3174,7 @@ In&nbsp;[141]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can see another important finidng, if we compare standard deviation values between traffic parameters, see that speed variable has a very low standard deviation value (8.9 <em>km/h</em>) in comparison with mean value (96.8 <em>km/h</em>). This means that the value does not vary a lot around the mean value, meaning that speed parameter is more or less all the time near speed limit, no matter the state of traffic. In contrast, flow parameter for example varies a lot during the day. We can clearlly see increased traffic flow in the mornings and afternoons (rushours) and decreased traffic by night. This is one of the main reasons why most of the researchers do not use speed parameter as target parameter for prediction. For the same reason, in this reaserch flow parameter was choosen as target parameter.</p>
-<p><font color='red'>TODO: </font> add one week speed and flow graph.</p>
+<p><font color='red'>TODO: </font> perform some statistics on data. For example: is the traffic more intense during the weekends than non-weekends. The answer should be offcourse yes.</p>
 </div>
 </div>
 </div>
@@ -2801,7 +3183,7 @@ In&nbsp;[141]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><font color='red'>TODO: </font> add Target variable. Since I want to predict flow, target value will be flow, but shifted for one hour back!</p>
+<p><font color='red'>QUESTION: </font> Is there some other more interesting question (assumption) that I could test?</p>
 </div>
 </div>
 </div>
@@ -2810,7 +3192,7 @@ In&nbsp;[141]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><font color='red'>TODO: </font> perform some statistics. Weekends and non-weekends for example.</p>
+<p><img src="http://i.imgur.com/OEtRTbd.png" width="40%" height="40%"> </p>
 </div>
 </div>
 </div>
