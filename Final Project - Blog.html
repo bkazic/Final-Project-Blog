@@ -1709,14 +1709,14 @@ where  supply  is  considered  as  road  capacities,  speed  limitations  and  o
 characteristics.  If  the  demand  outgrows  supply,  traffic  congestion  is  the  result.  This 
 complex nonlinear correlation between demand and supply can be modelled and this has 
 been a focus of research for many researchers in the next few decades.</p>
-<p>In this blog, prediction of traffic flow 5 hours in to the future is preseneted, using linear legression model.
+<p>In this blog, prediction of traffic flow 5 hours in to the future is presented, using linear regression model.
 The prediction is done, by using several traffic parameters (flow, gap, speed...) measured from traffic loop sensors, 
 in combination with date-time related features (day of the week, hour of day...). Results shows
 that the method is applicable for this particular problem, due to the fact that the R2 measure 
 (coefficient of determination) of our best developed model is greater than 0.7.
 Finally, since this work described only modelling of one particular sensor, we also address how this approach 
-could be further improved by using MapReduce techniques, which would enable us to modell thousands
-of different sensros that we could use for traffic predictions.</p>
+could be further improved by using MapReduce techniques, which would enable us to model thousands
+of different sensors that we could use for traffic predictions.</p>
 <p><img src="http://khongthe.com/wallpapers/abstract/mini-traffic-jam-10593.jpg" width="40%" height="40%"></p>
 </div>
 </div>
@@ -1773,7 +1773,7 @@ type of transportation.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For this research we used the traffic loop sensor measurement data for Slovenia. There are 447 loop sensros installed inside the Slovenian roads (see figure). Every sensor data contains meta data information (such as location of the sensor, direction, region), as well as some regular traffic status measurements (such as flow, gap, occupancy, speed, traffic status). Real-time data stream is refresed every 5 minutes and is accesible via web API in JSON format at <a href="http://opendata.si/promet/counters/">http://opendata.si/promet/counters/</a>. This service has been continouslly crawled for the last 6 months by which we have created a historical dump of traffic related data, with 5 minutes resampling interval, for all 447 sensors. The availability of large amount of data makes this problem highly suitable for several machine learning methods.</p>
+<p>For this research we used the traffic loop sensor measurement data for Slovenia. There are 447 loop sensors installed inside the Slovenian roads (see figure). Every sensor data contains meta data information (such as location of the sensor, direction, region), as well as some regular traffic status measurements (such as flow, gap, occupancy, speed, traffic status). Real-time data stream is refreshed  every 5 minutes and is accessible via web API in JSON format at <a href="http://opendata.si/promet/counters/">http://opendata.si/promet/counters/</a>. This service has been continuously crawled for the last 6 months by which we have created a historical dump of traffic related data, with 5 minutes resampling interval, for all 447 sensors. The availability of large amount of data makes this problem highly suitable for several machine learning methods.</p>
 <p><img src="Figures/counters.png" /></p>
 </div>
 </div>
@@ -1793,7 +1793,7 @@ type of transportation.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>From the previously mentioned database, we have created a dump file (in csv format) of one specific traffic loop sensor (<em>SensorID: 0178_11</em>). This sensor is placed on one of the most busiest roads, located on the bypass of the Slovenias capital city Ljubljana. This 6 months long historical data dump will be used for furhter analysis. Our main goal is to design a prediction model (for this specific sensor) that will be able to predict traffic, 5 hour into the future. </p>
+<p>From the previously mentioned database, we have created a dump file (in csv format) of one specific traffic loop sensor (<em>SensorID: 0178_11</em>). This sensor is placed on one of the busiest roads, located on the bypass of the Slovenias capital city Ljubljana. This 6 months long historical data dump will be used for further analysis. Our main goal is to design a prediction model (for this specific sensor) that will be able to predict traffic, 5 hour into the future. </p>
 </div>
 </div>
 </div>
@@ -1931,17 +1931,17 @@ In&nbsp;[513]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>From the importet dataframe, we can see that we have a historical record with timestamps, that contains 5 different sensor measurements:</p>
+<p>From the imported dataframe, we can see that we have a historical record with timestamps, that contains 5 different sensor measurements:</p>
 <ul>
 <li><strong>flow:</strong> is the number of vehicles passing a reference point, per hour.</li>
 <li><strong>gap:</strong> average time gap (in seconds) between vehicles, per hour.</li>
 <li><strong>occupancy:</strong> occupancy of the road in the 1/10th of the percent. For example, value 57 from data converts to 5.7%.</li>
 <li><strong>speed:</strong> average speed (<em>km/h</em>) of vehicles, per hour. Speed of every vehicle is almost impossible to track and is therefore estimated from other parameters.</li>
-<li><strong>traffic status:</strong> Numeric status of the traffic. 1 beeing <em>&quot;normal traffic&quot;</em>, and 5 beeing <em>&quot;heavy traffic with congestions&quot;</em>.</li>
+<li><strong>traffic status:</strong> Numeric status of the traffic. 1 being <em>&quot;normal traffic&quot;</em>, and 5 being <em>&quot;heavy traffic with congestions&quot;</em>.</li>
 </ul>
-<p>At a bottom figure, we can see a visualisation of data for one randomly selected week from our data. What we can instantlly see from the Flow graph (upper left) are the distinguished daily patterents over the week. This can be seen because, every day during the night, traffic flow is very low and dugin the day number of cars increases. We can observe how this daily patterens durring the week are very simillar, where patterens for weekend are different. What can also be observed is the distinguished peak in the morning (morning rush hour), followed by another peak (afternoon rushour).</p>
-<p>Simillar findings can be seen from the &quot;Occupancy&quot; graph (bottom left) and &quot;Traffic Status&quot; graph (bottom right), but not on the &quot;Speed graph&quot; (upper right). We can see that speed doesn&#39;t have daily patterens, but is more or less constant near to speed limit. We can observe very small standard deviation and mean close to speed limit. This is due to the fact, that even by night, when the road is empty drivers drive near to the speed limit. And also, if the road maximum capacity is correctly designed, average speed by day is most of the time arround speed limit. Due to the fact that speed does not have this distinguish daily patterens that we can observe in other parameters, researchers usually avoid predicting speed variable. For the same reasons, also in this work, traffic flow was choosen as a parameter that we want to predict.</p>
-<p>Another interesting finding that we can be observed from the graph bellow, is the anomaly which can be seen on Wednesday during the afternoon rush hour. We can observe a drop in flow and speed parameter, which means that the speed and traffic flow was unusually low for that time at the day. Also we can see that occupancy was very high at that time and traffic status changed from status 4 to 5. This is most probablly due to traffic congestion (traffic jam or accident).</p>
+<p>At a bottom figure, we can see a visualisation of data for one randomly selected week from our data. What we can instantly see from the Flow graph (upper left) are the distinguished daily patterns over the week. This can be seen because, every day during the night, traffic flow is very low and during the day number of cars increases. We can observe how this daily patterns during the week are very similar, where patterens for weekend are different. What can also be observed is the distinguished peak in the morning (morning rush hour), followed by another peak (afternoon rush hour).</p>
+<p>Similar findings can be seen from the &quot;Occupancy&quot; graph (bottom left) and &quot;Traffic Status&quot; graph (bottom right), but not on the &quot;Speed graph&quot; (upper right). We can see that speed doesn&#39;t have daily patterns, but is more or less constant near to speed limit. We can observe very small standard deviation and mean close to speed limit. This is due to the fact, that even by night, when the road is empty drivers drive near to the speed limit. And also, if the road maximum capacity is correctly designed, average speed by day is most of the time around speed limit. Due to the fact that speed does not have this distinguish daily paterens that we can observe in other parameters, researchers usually avoid predicting speed variable. For the same reasons, also in this work, traffic flow was chosen as a parameter that we want to predict.</p>
+<p>Another interesting finding that we can be observed from the graph bellow, is the anomaly which can be seen on Wednesday during the afternoon rush hour. We can observe a drop in flow and speed parameter, which means that the speed and traffic flow was unusually low for that time at the day. Also we can see that occupancy was very high at that time and traffic status changed from status 4 to 5. This is most probably due to traffic congestion (traffic jam or accident).</p>
 <p><img src="Figures/traffic_params.png" width="90%" height="90%" align="left"/></p>
 </div>
 </div>
@@ -1961,7 +1961,7 @@ In&nbsp;[513]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>With a basic sanity check we can see some interesting finidngs. For example, average speed is around 97<em>km/h</em>, which make sense, since speed limit on this section is 100<em>km/h</em>. We can also see that number of samples is the same for all parameters. As we will see later, this does not mean that we do not have any missing data, but it just means that when we have missing data, all the parameters are missing. We can also spot some irregular values. For example we know that &quot;TrafficStatus&quot; can have values only between 1 and 5, but in the data bellow, we can see that minimum value is 0. In the next sections, we will try to handle this corrupt data and missing values.</p>
+<p>With a basic sanity check we can see some interesting findings. For example, average speed is around 97<em>km/h</em>, which make sense, since speed limit on this section is 100<em>km/h</em>. We can also see that number of samples is the same for all parameters. As we will see later, this does not mean that we do not have any missing data, but it just means that when we have missing data, all the parameters are missing. We can also spot some irregular values. For example we know that &quot;TrafficStatus&quot; can have values only between 1 and 5, but in the data bellow, we can see that minimum value is 0. In the next sections, we will try to handle this corrupt data and missing values.</p>
 </div>
 </div>
 </div>
@@ -2090,7 +2090,7 @@ In&nbsp;[514]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>If we check look for the records where &quot;TrafficStatus&quot; parameter equals to zero, we can quickly see that this records are corrupted. We can see that for this records, all parameters equals to zero. This does not make sense. For example, if &quot;Speed&quot; would actually be zero due to some hevy traffic congestion or accident, than &quot;Occupancy&quot; parameter shouldn&#39;t be zero, but something big. Also from the DateTime parameter, we can see that something is wrong, since the date and time is repeated. We can conclude that all the records where all the parameters are 0 are corrupted, therefore we will mark them as NaN (null) and deal with them as missing values (in the next section). </p>
+<p>If we check look for the records where &quot;TrafficStatus&quot; parameter equals to zero, we can quickly see that this records are corrupted. We can see that for this records, all parameters equals to zero. This does not make sense. For example, if &quot;Speed&quot; would actually be zero due to some heavy traffic congestion or accident, than &quot;Occupancy&quot; parameter shouldn&#39;t be zero, but something big. Also from the DateTime parameter, we can see that something is wrong, since the date and time is repeated. We can conclude that all the records where all the parameters are 0 are corrupted, therefore we will mark them as NaN (null) and deal with them as missing values (in the next section). </p>
 </div>
 </div>
 </div>
@@ -2225,7 +2225,7 @@ In&nbsp;[516]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Another obvious irragularitie can be seen from the DateTime column, where we can see some duplicated records. As it turns out, this are actually the missing values, but since the web API is not updated when the data are not streaming this creates duplicate values in the historical dump. We have to detect this duplicates and mark them as NaN (null) values.</p>
+<p>Another obvious irregularity can be seen from the DateTime column, where we can see some duplicated records. As it turns out, this are actually the missing values, but since the web API is not updated when the data are not streaming this creates duplicate values in the historical dump. We have to detect this duplicates and mark them as NaN (null) values.</p>
 </div>
 </div>
 </div>
@@ -2345,7 +2345,7 @@ In&nbsp;[517]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now that all corrupted data and missing data have value Nan, we can decide what to do with missing data. For now we will just delete them, because we still have a lot of other records. It is not that trivial to replace missing values if they missing for a whole day or more. Previous value imputation, or some linear interpolation would not be a good idea in this case. We would probablly need to use something like linear regression to replace missing values.</p>
+<p>Now that all corrupted data and missing data have value Nan, we can decide what to do with missing data. For now we will just delete them, because we still have a lot of other records. It is not that trivial to replace missing values if they missing for a whole day or more. Previous value imputation, or some linear interpolation would not be a good idea in this case. We would probably need to use something like linear regression to replace missing values.</p>
 </div>
 </div>
 </div>
@@ -2380,7 +2380,7 @@ In&nbsp;[518]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For the reasons that was discussed in previus chapter &quot;Flow&quot; parameter was selected as the target parameter. &quot;Target&quot; column is added to the dataframe, by duplicating the &quot;Flow&quot; and shifting it for the same periode as we want our predictions. In this work, we hcae choosen 5h. This column will be used to learn the model how to predict traffic flow for one hour into the future. </p>
+<p>For the reasons that was discussed in previous chapter &quot;Flow&quot; parameter was selected as the target parameter. &quot;Target&quot; column is added to the dataframe, by duplicating the &quot;Flow&quot; and shifting it for the same period as we want our predictions. In this work, we have chosen 5h. This column will be used to learn the model how to predict traffic flow for one hour into the future.</p>
 </div>
 </div>
 </div>
@@ -2492,7 +2492,7 @@ In&nbsp;[519]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>By performing sanity check again, we can see that we have reduced our dataset by 37% (from 46447 to 29215) with cleaning, but we still have reasonable amount of data to train and test our prediction model.  Overall, the data looks better now, for example mininmum row does not contain zeros any more. We can also notice that the Speed mean slightly increased (from 96.8 <em>km/h</em> to 97.3 <em>km/h</em>), due to deleted corrupted zero values. We now have a clean dataset on which we can perform some statistic tests and train our prediction model.</p>
+<p>By performing sanity check again, we can see that we have reduced our dataset by 37% (from 46447 to 29215) with cleaning, but we still have reasonable amount of data to train and test our prediction model.  Overall, the data looks better now, for example minimum row does not contain zeros any more. We can also notice that the Speed mean slightly increased (from 96.8 <em>km/h</em> to 97.3 <em>km/h</em>), due to deleted corrupted zero values. We now have a clean dataset on which we can perform some statistic tests and train our prediction model.</p>
 </div>
 </div>
 </div>
@@ -2632,7 +2632,7 @@ In&nbsp;[520]:
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The availability of large amount of traffic related data, collected from a variety of sources
 and  emerging  field  of  sophisticated  machine  learning  algorithms  has  led  to  significant 
-leap  from  analytical  modelling  to  data  driven  modelling  approaches.  With our cleaned dataset we can develop our machine learning model, that will be able to predict traffic 5 hours into the future. But the most important thing for accurate predictions, is the correct sellection of machine leargning method, but the features that we are sending into the model. The more the features will represent the current state, the better the prediction.</p>
+leap from  analytical  modelling  to  data  driven  modelling  approaches.  With our cleaned dataset we can develop our machine learning model, which will be able to predict traffic 5 hours into the future. But the most important thing for accurate predictions, is the correct selection of machine learning method, but the features that we are sending into the model. The more the features will represent the current state, the better the prediction.</p>
 </div>
 </div>
 </div>
@@ -2651,8 +2651,8 @@ leap  from  analytical  modelling  to  data  driven  modelling  approaches.  Wit
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In orther to find addditional features, that would help our model predict better, we will investigate if there are some features that could be extract from timestamp. As it colud be seen from the figure in the begginig of this blog, showing one week of traffic data, traffic (flow) during the week is very clearlly different from traffic over the weekend. We can assume that this information (if it a weekday or weekend), would be very usefull as a feature for our model when predicting traffic. But what about the days during the week. Would it make sense to add also day of the week as a feature? Looking at a figure above, our assumption is that distributtion of traffic flow between days of the week is the the same. We can test our hypothesis with statistical t-test. </p>
-<p>But in order to know, what kind of statistical t-test to perform, we first need to know what kind of data distribution we are dealing with. From the histogram bellow (left graph), we can see that &quot;Flow&quot; parameter, that we are interested in (since this is the parameter that we will want to predict), is non-normally distributed. Meaning that we have to perform Man-Whitney U test in ordet to test our null hypothesis, that two populations are the same. If the distribution would be normal (Gauissian), as for example &quot;Speed&quot; is (right graph), we would use Welch&#39;s t test. In order to test our null hypothesis, P-value was computed between all combinations of days in the week. P value determines statistical significance of a hypothesis test. A small P value (smaller than critical value - usually 0.05 - 5%) means then we can reject the null hypothesis, else we cannot reject it.</p>
+<p>In other to find additional features, that would help our model predict better, we will investigate if there are some features that could be extract from timestamp. As it could be seen from the figure in the begging of this blog, showing one week of traffic data, traffic (flow) during the week is very clearly different from traffic over the weekend. We can assume that this information (if it a weekday or weekend), would be very useful as a feature for our model when predicting traffic. But what about the days during the week. Would it make sense to add also day of the week as a feature? Looking at a figure above, our assumption is that distribution of traffic flow between days of the week is the same. We can test our hypothesis with statistical t-test. </p>
+<p>But in order to know, what kind of statistical t-test to perform, we first need to know what kind of data distribution we are dealing with. From the histogram bellow (left graph), we can see that &quot;Flow&quot; parameter, that we are interested in (since this is the parameter that we will want to predict), is non-normally distributed. Meaning that we have to perform Man-Whitney U test in order to test our null hypothesis, that two populations are the same. If the distribution would be normal (Gauissian), as for example &quot;Speed&quot; is (right graph), we would use Welch&#39;s t test. In order to test our null hypothesis, P-value was computed between all combinations of days in the week. P value determines statistical significance of a hypothesis test. A small P value (smaller than critical value - usually 0.05 - 5%) means then we can reject the null hypothesis, else we cannot reject it.</p>
 </div>
 </div>
 </div>
@@ -3051,7 +3051,7 @@ In&nbsp;[522]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>All the values in the table smaller than p-critical (0.05), means that we can reject our null hypothesis, therefore we can conclude that this two samples (days) are statistically different. Interesting results can be seen in the table above. We can see that for almost all combinations between different days of the week, there is a signifficant difference. But there are also some combinations, where p value is larger than p-critical (0.05), and therfore we cannot reject our null hypothesis. This combinations are Wednesday-Tuesday, Thursday-Tuesday and Wednesday-Thursday. It looks like the traffic between this days is very simillar, which can also be observed from the figure at the bigninning of this blog, showing one week of traffic data. Even thought this three days in the middle of the week are very simillar, we can still conclude that most of the days are signifficantly different, therefore it would make sense to include also day of the week as a feature in to our model.</p>
+<p>All the values in the table smaller than p-critical (0.05), means that we can reject our null hypothesis, therefore we can conclude that this two samples (days) are statistically different. Interesting results can be seen in the table above. We can see that for almost all combinations between different days of the week, there is a significant difference. But there are also some combinations, where p value is larger than p-critical (0.05), and therefore we cannot reject our null hypothesis. This combinations are Wednesday-Tuesday, Thursday-Tuesday and Wednesday-Thursday. It looks like the traffic between this days is very similar, which can also be observed from the figure at the beginning of this blog, showing one week of traffic data. Even though this three days in the middle of the week are very similar, we can still conclude that most of the days are significantly different, therefore it would make sense to include also day of the week as a feature in to our model.</p>
 </div>
 </div>
 </div>
@@ -3214,7 +3214,7 @@ In&nbsp;[523]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>One of the assumptions of linear regression model is, that input features are statistically independent (uncorrelated) with each other. Some methods (e.g. generalized least squares) are capable of handling correlated errors, although they typically require significantly more data unless some sort of regularization is used to bias the model towards assuming uncorrelated errors. In order to find if we have any stronglly correlated features, we will visualize correlations between features and callculate them.</p>
+<p>One of the assumptions of linear regression model is, that input features are statistically independent (uncorrelated) with each other. Some methods (e.g. generalized least squares) are capable of handling correlated errors, although they typically require significantly more data unless some sort of regularization is used to bias the model towards assuming uncorrelated errors. In order to find if we have any strongly correlated features, we will visualize correlations between features and calculate them.</p>
 </div>
 </div>
 </div>
@@ -6689,7 +6689,7 @@ In&nbsp;[525]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>From the results above, we can see that we have a strong linear correlation between &quot;Flow&quot;, &quot;Occupancy&quot; and &quot;TrafficStatus&quot;. This can also be seen from the figure. What can also be observed from the fiugre is, that it looks like &quot;Flow&quot; parameter is also non-linearly (pollynomically) correlated with &quot;Gap&quot;. In one way, it makes sense that this parameters are correlated, since they are all measuring the same thing. But this correlated feaures does not bring any new information to the model, even worse, this correlated feature can corrupt our linear regression model. For one of our tests, we will set a model without this correlated features. From the table we can also see that, features are not correlated with the &quot;Target&quot;, which is good.</p>
+<p>From the results above, we can see that we have a strong linear correlation between &quot;Flow&quot;, &quot;Occupancy&quot; and &quot;TrafficStatus&quot;. This can also be seen from the figure. What can also be observed from the figure is, that it looks like &quot;Flow&quot; parameter is also non-linearly (pollynomically) correlated with &quot;Gap&quot;. In one way, it makes sense that this parameters are correlated, since they are all measuring the same thing. But this correlated features does not bring any new information to the model, even worse, this correlated feature can corrupt our linear regression model. For one of our tests, we will set a model without this correlated features. From the table we can also see that, features are not correlated with the &quot;Target&quot;, which is good.</p>
 </div>
 </div>
 </div>
@@ -6708,7 +6708,7 @@ In&nbsp;[525]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For this reaserch, linear regression model was wrapped into a python object. When creating an instance of this object, one can define a target variable, and parameters to compute features from, given the dataframe. There is also a third optional parameter, which can transform categorical features in binary features. Object has two methods; train - where we define on which data model should be trained, and predict - where data from which predictions should be computed are passed.</p>
+<p>For this research, linear regression model was wrapped into a python object. When creating an instance of this object, one can define a target variable, and parameters to compute features from, given the dataframe. There is also a third optional parameter, which can transform categorical features in binary features. Object has two methods; train - where we define on which data model should be trained, and predict - where data from which predictions should be computed are passed.</p>
 <p>Linear regression algorithm is used in this research works by solving Ordinary Least Square - OLS equation (with the help of scipy.linalg.lstsq() method). Ordinary Least Square (OLS) is the simplest and thus most common estimator. It is conceptually simple and computationally straightforward. OLS estimates are commonly used to analyze both experimental and observational data. This method seeks to minimize the sum of squared residuals that can be compactly written as 
 \begin{equation*} \|A\mathbf{x}-\mathbf{b}\|^2 \end{equation*}
 This leads to a closed-form expression for the estimated value of the unknown parameter β:</p>
@@ -6784,8 +6784,8 @@ In&nbsp;[526]:
 <p>We will create several different instances of the model described in previous chapter. This instances will contain different features, from which the model will learn, and predict. We will create these four models:</p>
 <ul>
 <li><strong>Model 1: &quot;Traffic features&quot;</strong> - is using only traffic features from the sensors</li>
-<li><strong>Model 2: &quot;All features&quot;</strong> - is using traffic features, and aditional date time features extracted in previous chapter</li>
-<li><strong>Model 3: &quot;Reduced features&quot;</strong> - is using the same features as Model 2, minus features that were found hevily correlated in previous chapter</li>
+<li><strong>Model 2: &quot;All features&quot;</strong> - is using traffic features, and additional date time features extracted in previous chapter</li>
+<li><strong>Model 3: &quot;Reduced features&quot;</strong> - is using the same features as Model 2, minus features that were found heavily correlated in previous chapter</li>
 <li><strong>Model 4: &quot;Dummy features&quot;</strong> - is using the same features as Model 2, but with binary (dummy) features</li>
 </ul>
 </div>
@@ -6836,7 +6836,7 @@ In&nbsp;[527]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In order to eveluate models deffined above, we will use Coefficient of determination (R squared). This is a number that indicates how well data fit a statistical model. Our dataset is also splitted into 2 subset: training model and testing model. On the first subset, we will train the models and on the other, models will be tested. If we train and test our model on the same dataset, we risk the problem of overfitting (also this can be considered as cheating).</p>
+<p>In order to evaluate models defined above, we will use Coefficient of determination (R squared). This is a number that indicates how well data fit a statistical model. Our dataset is also splited into 2 subset: training model and testing model. On the first subset, we will train the models and on the other, models will be tested. If we train and test our model on the same dataset, we risk the problem of over fitting (also this can be considered as cheating).</p>
 </div>
 </div>
 </div>
@@ -10702,7 +10702,7 @@ MxTUie4e+E4AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this research, we have shown the whole proces of developing prediction model for one particular sensor, that is able to predict traffic flow 5 hours into the future. First, data were described in detail. Dataset was then cleaned and reduced. Statistical tests were then performed to get a better understanding of data. Additional features were extracted from timestamp of each record. Linear regression model (OCL) was then described, and 4 different models were developed. Each containning different features set. This models were then tested and evaluated on testing set. The result can be seen on bellow figure, where we can see that our Model4 gave the best results. From this we can conclude, that additional datetime features has a signifficant impact on prediction accuracy. If this features are also parsed into binary features, this results to even better accuracy.</p>
+<p>In this research, we have shown the whole process of developing prediction model for one particular sensor, that is able to predict traffic flow 5 hours into the future. First, data were described in detail. Dataset was then cleaned and reduced. Statistical tests were then performed to get a better understanding of data. Additional features were extracted from timestamp of each record. Linear regression model (OCL) was then described, and 4 different models were developed. Each containing different features set. This models were then tested and evaluated on testing set. The result can be seen on bellow figure, where we can see that our Model4 gave the best results. From this we can conclude, that additional datetime features has a significant impact on prediction accuracy. If this features are also parsed into binary features, this results to even better accuracy.</p>
 </div>
 </div>
 </div>
@@ -10950,8 +10950,8 @@ r4iISJ79fwpj4iwyuOX2AAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As we have allready mentioned, this research has shown modelling of traffic only for one specific sensor. Even if the method is relativelly simple, and computionally non demanding, we can expect some problems if we would have to model thousnds of different sensros. Not to even mention, that we would need also different models for different predictions horizons, or different paramters (speed, occupancy, ...). This is the case where MapReduce could signifficantlly improve this process.</p>
-<p>Finally, we can conclude that we have shown good prediction results, and that linear regression with additional datetime features can be used for predictiong traffic flow. Work such as this one, can lead to development of advanced applications that aims to 
+<p>As we have already mentioned, this research has shown modelling of traffic only for one specific sensor. Even if the method is relatively simple, and computationally non demanding, we can expect some problems if we would have to model thousands of different sensors. Not to even mention, that we would need also different models for different predictions horizons, or different parameters (speed, occupancy, ...). This is the case where MapReduce could significantly improve this process.</p>
+<p>Finally, we can conclude that we have shown good prediction results, and that linear regression with additional datetime features can be used for predicting traffic flow. Work such as this one, can lead to development of advanced applications that aims to 
 provide innovative services related to traffic management and transportation, that result to 
 reducing  traffic  congestions,  emissions,  energy  consumptions,  delays  and  improved 
 safety.</p>
